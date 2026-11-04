@@ -7,7 +7,7 @@
 | Nama / NIM | Mirabel Lordniani Gustaman / 25110200037 |
 | Vercel | https://uas-bells-bot.vercel.app |
 | Repo | https://github.com/bellordgust-gif/uas-bells-bot |
-| Commit freeze | _(belum diisi; catat waktu aslinya)_ |
+| Commit freeze | `1890e710e887090ed6e5237f69c6f915896bea1c` (2026-11-04T13:52:35+07:00) |
 
 ## Strategi
 Sumber: `bells_engine.js` dan `bells_strategi_ab.html`, profil Agresif. Sinyal ada di `lib/strategy.js`, dan satu fungsi `decide()` dipakai bot serta backtest.
