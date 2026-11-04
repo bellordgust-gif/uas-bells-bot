@@ -1,0 +1,1 @@
+{ "name": "uas-bells-bot", "private": true, "type": "module", "engines": { "node": ">=18" } }
