@@ -7,6 +7,7 @@
 //  • MDD dari kurva ekuitas (posisi dinilai di best bid); return total = ekuitas akhir ÷ modal − 1
 
 export const MODAL = 100e6, TF_MS = 4 * 3600e3;   // candle 4 jam
+export const AKHIR_FORWARD = '2026-11-14T05:00:00.000Z';   // batas UAS: Sabtu 14 Nov 2026 12.00 WIB, berlaku walaupun freeze terlambat
 
 export function tradeStats(trades) {
   const W = trades.filter(t => t.pnl > 0), L = trades.filter(t => t.pnl <= 0), sum = (a, f) => a.reduce((s, x) => s + f(x), 0), avg = a => (a.length ? a.reduce((s, x) => s + x, 0) / a.length : null);
@@ -27,7 +28,7 @@ const iso = s => (s.length === 16 ? s + ':00Z' : s);   // candle 'YYYY-MM-DDTHH:
 
 // ---- forward test dari log bot (respons /api/state) · freeze & akhir ISO UTC
 export function forwardFromLogs(state, { freeze, akhir } = {}) {
-  const L = state.log, F = freeze || state.freeze, END = akhir || new Date(Date.parse(F) + 10 * 864e5).toISOString();
+  const L = state.log, F = freeze || state.freeze, END = akhir || AKHIR_FORWARD;
   const inF = t => t >= F && t <= END, calls = (L.calls || []).filter(c => inF(c.t_mulai)), orders = (L.orders || []).filter(o => inF(o.t));
   const mid = o => (o.best_bid + o.best_ask) / 2, buys = new Map(), trades = [];
   for (const o of orders) { const k = o.pair;
@@ -58,7 +59,7 @@ export function cocokkanSinyal(botSig, btSig) {
 
 // ---- status bot terkini dari log mentah (semua panggilan sejak deploy, termasuk sebelum freeze)
 export function botStatus(state, now = Date.now()) {
-  const C = state.log.calls || [], last = C.at(-1), done = C.filter(c => c.hasil === 'DIPROSES' && c.candle).at(-1), F = Date.parse(state.freeze), END = F + 10 * 864e5;
+  const C = state.log.calls || [], last = C.at(-1), done = C.filter(c => c.hasil === 'DIPROSES' && c.candle).at(-1), F = Date.parse(state.freeze), END = Date.parse(AKHIR_FORWARD);
   return { fase: now < F ? 'sebelum_freeze' : now <= END ? 'forward' : 'selesai', freeze: state.freeze, akhir: new Date(END).toISOString(), panggilan_total: C.length,
     panggilan_error: C.filter(c => c.hasil === 'ERROR').length, terakhir: last ? { t: last.t_mulai, sumber: last.sumber, hasil: last.hasil, error: last.jumlah_error, candle: last.candle } : null,
     candle_terakhir_diproses: done ? done.candle : null, ekuitas: last?.ekuitas_akhir ?? null, kas: state.state?.cash ?? null, posisi: (state.state?.positions || []).map(p => p.pair) };
