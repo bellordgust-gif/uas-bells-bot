@@ -1,11 +1,11 @@
 # Bot Dry Run Indodax: BELLS (Ells'Land A+B Shared Exit)
 
-> **Status: belum di-freeze, belum di-deploy.** Link Vercel dan commit freeze belum diisi.
+> **Freeze terlambat:** dilakukan sesudah batas 4 Nov 2026 12.00 WIB dengan izin dosen. Forward test tetap berakhir 14 Nov 2026 12.00 WIB, jadi kurang dari 10 hari.
 
 | | |
 |---|---|
 | Nama / NIM | Mirabel Lordniani Gustaman / 25110200037 |
-| Vercel | _(belum diisi)_ |
+| Vercel | https://uas-bells-bot.vercel.app |
 | Repo | https://github.com/bellordgust-gif/uas-bells-bot |
 | Commit freeze | _(belum diisi; catat waktu aslinya)_ |
 
@@ -35,14 +35,14 @@ Modal Rp100 juta, long-only, keputusan di close dan eksekusi di open candle beri
 
 | Mulai | CAGR | MDD | PF | Trade | Beli & tahan BTC/IDR |
 |---|---|---|---|---|---|
-| 2023-11-01 | 18,67% | −21,20% | 5,30 | 43 | +153,27%, MDD −49,43% |
-| 2022-12-20 | 11,82% | −20,90% | 2,93 | 55 | +432,94%, MDD −49,43% |
+| 2023-11-01 | 18,65% | −21,20% | 5,30 | 43 | +152,37%, MDD −49,43% |
+| 2022-12-20 | 11,80% | −20,90% | 2,93 | 55 | +431,05%, MDD −49,43% |
 
 Keterbatasan:
 - Trade di bawah 100, jadi sampelnya kecil dan PF bisa turun jauh di forward test.
-- Sebagian besar laba datang dari 2024 (+50,93%). Hasil 2025 +2,21%, dan 2026 −0,30%.
+- Sebagian besar laba datang dari 2024 (+50,93%). Hasil 2025 +2,21%, dan 2026 −0,35%.
 - Return total kalah dari beli & tahan BTC pada dua periode, walaupun drawdown jauh lebih kecil.
-- Median spread memakai snapshot bot Maudy sampai 2026-11-04 02:40 UTC (`data/snapshots/`). Sebaiknya diukur ulang sebelum freeze.
+- Median spread memakai snapshot order book dari bot Maudy sampai 2026-11-04 02:40 UTC (`data/snapshots/`) dan tidak diukur ulang saat freeze.
 
 ## Menjalankan
 ```

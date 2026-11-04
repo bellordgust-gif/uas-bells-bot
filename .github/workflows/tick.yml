@@ -1,5 +1,5 @@
 # Penjadwal cadangan (opsional): tiap jam di menit ke-14. Penjadwal utama = Upstash QStash menit ke-11 (candle 4 jam tutup di 00/04/08/12/16/20 UTC; panggilan tiap jam = cadangan bila satu jadwal terlewat).
-# Panggilan ganda aman: idempotency di bot memastikan tiap candle hanya diproses sekali. Secret: TICK_URL dan CRON_SECRET di GitHub → Settings → Secrets → Actions.
+# Panggilan ganda aman: idempotency di bot memastikan tiap candle hanya diproses sekali. Secret: TICK_URL dan CRON_SECRET di GitHub → Settings → Secrets → Actions. Tanpa secret, langkah ini dilewati.
 name: tick
 on:
   schedule:
@@ -11,5 +11,9 @@ jobs:
     timeout-minutes: 6
     steps:
       - name: panggil bot
+        env:
+          TICK_URL: ${{ secrets.TICK_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
         run: |
-          curl -sS --max-time 300 -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" "${{ secrets.TICK_URL }}?sumber=github-actions" | head -c 2000
+          if [ -z "$TICK_URL" ] || [ -z "$CRON_SECRET" ]; then echo "secret belum diisi, dilewati"; exit 0; fi
+          curl -sS --max-time 300 -H "Authorization: Bearer $CRON_SECRET" "$TICK_URL?sumber=github-actions" | head -c 2000
