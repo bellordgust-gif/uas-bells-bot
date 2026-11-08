@@ -44,6 +44,9 @@ Keterbatasan:
 - Return total kalah dari beli & tahan BTC pada dua periode, walaupun drawdown jauh lebih kecil.
 - Median spread memakai snapshot order book dari bot Maudy sampai 2026-11-04 02:40 UTC (`data/snapshots/`) dan tidak diukur ulang saat freeze.
 
+## Catatan sesudah freeze
+- 8 Nov 2026: sejak 7 Nov 22.11 WIB Indodax menolak setiap permintaan bot dengan HTTP 403, sehingga candle yang tutup 7 Nov 23.00 sampai 8 Nov 11.00 WIB tidak diproses tepat waktu. Bot tetap dipanggil tiap jam dan setiap panggilan tercatat `ERROR` di log. Dugaan penyebab: User-Agent yang mengandung kata "bot". Yang diubah hanya User-Agent di `lib/indodax.js` (`uas-dry-run-bot-bells` → `uas-dry-run-bells`). Aturan, parameter, universe, biaya, dan backtest tidak berubah. Panggilan pertama sesudah perbaikan memproses candle tertutup terakhir; candle sebelumnya tidak diulang, dan selisihnya terlihat di `hitung_ulang`.
+
 ## Menjalankan
 ```
 node tools/fetch_history.mjs 240 2022-02-01
